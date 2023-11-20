@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
         // php artisan make:seeder ProductsTableSeeder
         // php artisan make:factory ProductFactory
 
-        //$this->call(CategoriesTableSeeder::class);
+        $this->call(CreateSuperUserSeeder::class);
     }
 }
