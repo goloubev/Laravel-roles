@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Add new post
+            Edit role
         </h2>
     </x-slot>
 
@@ -18,20 +18,13 @@
                     </div>
                 @endif
 
-                <form name="form" action="{{ route('posts.store-post') }}" method="post">
+                <form name="form" action="{{ route('roles.update-role', $role) }}" method="post">
                     @csrf
 
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
-                        <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control" />
+                        <input type="text" name="name" id="name" value="{{ $role->name ?? old('name') }}" class="form-control" />
                         @error('name')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="text">Text</label>
-                        <textarea name="text" id="text" class="form-control" rows="3">{{ old('text') }}</textarea>
-                        @error('text')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

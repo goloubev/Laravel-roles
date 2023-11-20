@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Roles') }}
         </h2>
     </x-slot>
 
@@ -14,21 +14,20 @@
                     </div>
                 @endif
 
-                <p><a href="{{ route('posts.add-post') }}" class="btn btn-success mb-4">Add new post</a></p>
+                <p><a href="{{ route('roles.add-role') }}" class="btn btn-success mb-4">Add new role</a></p>
 
-                @if(count($posts) > 0)
-                    @foreach($posts as $post)
+                @if(count($roles) > 0)
+                    @foreach($roles as $role)
                         <div class="card mb-3">
-                            <h5 class="card-header">{{ $post->name }} ({{ $post->created_at->diffForHumans() }})</h5>
+                            <h5 class="card-header">{{ $role->name }}</h5>
                             <div class="card-body">
-                                <p class="mb-3">{{ $post->text }}</p>
-                                <a href="{{ route('posts.edit-post', $post->id) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ route('posts.delete-post', $post->id) }}" class="btn btn-danger">Delete</a>
+                                <a href="{{ route('roles.edit-role', $role->id) }}" class="btn btn-primary">Edit</a>
+                                <a href="{{ route('roles.delete-role', $role->id) }}" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     @endforeach
                 @else
-                    No posts
+                    No roles
                 @endif
             </div>
         </div>

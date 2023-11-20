@@ -18,7 +18,7 @@
                     </div>
                 @endif
 
-                <form name="form" action="{{ route('update-post', $post) }}" method="post">
+                <form name="form" action="{{ route('posts.update-post', $post) }}" method="post">
                     @csrf
 
                     <div class="form-group mb-3">

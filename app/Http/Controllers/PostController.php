@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -20,7 +20,7 @@ class PostController extends Controller
 
     public function create(): View
     {
-        return view('add-new-post');
+        return view('posts.add-post');
     }
 
     public function store(Request $request): RedirectResponse
@@ -37,7 +37,7 @@ class PostController extends Controller
 
     public function edit(Post $post): View
     {
-        return view('edit-post', [
+        return view('posts.edit-post', [
             'post' => $post,
         ]);
     }
@@ -54,7 +54,7 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with('success', 'Updated with success!');
     }
 
-    public function delete(Post $post): RedirectResponse
+    public function destroy(Post $post): RedirectResponse
     {
         $post->delete();
 
