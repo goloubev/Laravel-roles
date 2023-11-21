@@ -28,6 +28,27 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div class="form-group mb-3">
+                        <label>Permissions</label>
+
+                        @foreach($permissions as $permission)
+                            <div class="form-check">
+                                <input
+                                    type="checkbox"
+                                    name="permissions[]"
+                                    id="permission_{{ $permission->id }}"
+                                    value="{{ $permission->id }}"
+                                    class="form-check-input"
+                                    {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }}
+                                />
+                                <label for="permission_{{ $permission->id }}" class="form-check-label">{{ $permission->name }}</label>
+                            </div>
+                        @endforeach
+
+                        @error('permissions')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

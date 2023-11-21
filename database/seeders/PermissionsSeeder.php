@@ -9,9 +9,9 @@ class PermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        Permission::create(['name' => 'show-post']);
-        Permission::create(['name' => 'add-post']);
-        Permission::create(['name' => 'edit-post']);
-        Permission::create(['name' => 'delete-post']);
+        Permission::create(['name' => 'Show posts']);
+        Permission::create(['name' => 'Add posts']);
+        Permission::create(['name' => 'Edit posts']);
+        Permission::create(['name' => 'Delete posts']);
     }
 }

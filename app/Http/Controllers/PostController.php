@@ -26,8 +26,8 @@ class PostController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:250',
-            'text' => 'required|string|min:3',
+            'name' => 'required|string|min:1|max:250',
+            'text' => 'required|string|min:1',
         ]);
 
         Post::create($data);
@@ -45,8 +45,8 @@ class PostController extends Controller
     public function update(Post $post, Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:250',
-            'text' => 'required|string|min:3',
+            'name' => 'required|string|min:1|max:250',
+            'text' => 'required|string|min:1',
         ]);
 
         $post->update($data);
