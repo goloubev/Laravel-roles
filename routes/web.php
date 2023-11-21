@@ -17,14 +17,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
 
     Route::group(['prefix' => 'posts'], function() {
-        Route::get('/add-post', [PostController::class, 'create'])->name('posts.add-post');
-        Route::post('/store-post', [PostController::class, 'store'])->name('posts.store-post');
-        Route::get('/edit-post/{post}', [PostController::class, 'edit'])->name('posts.edit-post');
-        Route::post('/update-post/{post}', [PostController::class, 'update'])->name('posts.update-post');
-        Route::get('/delete-post/{post}', [PostController::class, 'destroy'])->name('posts.delete-post');
+        Route::get('/add-post', [PostController::class, 'create'])->name('posts.add-post')->middleware('can:add-posts');
+        Route::post('/store-post', [PostController::class, 'store'])->name('posts.store-post')->middleware('can:add-posts');
+        Route::get('/edit-post/{post}', [PostController::class, 'edit'])->name('posts.edit-post')->middleware('can:edit-posts');
+        Route::post('/update-post/{post}', [PostController::class, 'update'])->name('posts.update-post')->middleware('can:edit-posts');
+        Route::get('/delete-post/{post}', [PostController::class, 'destroy'])->name('posts.delete-post')->middleware('can:delete-posts');
     });
 
-    Route::group(['prefix' => 'roles'], function() {
+    Route::group(['middleware' => 'role:super-admin', 'prefix' => 'roles'], function() {
         Route::get('/index', [RoleController::class, 'index'])->name('roles.index');
         Route::get('/add-role', [RoleController::class, 'create'])->name('roles.add-role');
         Route::post('/store-role', [RoleController::class, 'store'])->name('roles.store-role');

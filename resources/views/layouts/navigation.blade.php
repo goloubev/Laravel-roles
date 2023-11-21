@@ -15,9 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         Dashboard
                     </x-nav-link>
-                    <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
-                        Roles
-                    </x-nav-link>
+
+                    @role('super-admin')
+                        <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
+                            Roles
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

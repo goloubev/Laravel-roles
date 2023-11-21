@@ -12,7 +12,7 @@ class RoleController extends Controller
 {
     public function index(): View
     {
-        $roles = Role::orderBy('name', 'asc')->whereNotIn('name', ['super-user'])->get();
+        $roles = Role::orderBy('name', 'asc')->whereNotIn('name', ['super-admin'])->get();
 
         return view('roles.index', [
             'roles' => $roles,
@@ -51,7 +51,7 @@ class RoleController extends Controller
 
     public function edit(Role $role): View
     {
-        $role = Role::whereNotIn('name', ['super-user'])->findOrFail($role->id);
+        $role = Role::whereNotIn('name', ['super-admin'])->findOrFail($role->id);
         $permissions = Permission::all();
 
         return view('roles.edit-role', [
@@ -68,7 +68,7 @@ class RoleController extends Controller
             'permissions.*' => 'required|integer|exists:permissions,id'
         ]);
 
-        $role = Role::whereNotIn('name', ['super-user'])->findOrFail($role->id);
+        $role = Role::whereNotIn('name', ['super-admin'])->findOrFail($role->id);
         $role->update([
             'name' => $request->name,
         ]);
@@ -83,6 +83,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role): RedirectResponse
     {
+        $role = Role::whereNotIn('name', ['user', 'super-admin'])->findOrFail($role->id);
         $role->delete();
 
         return redirect()->route('roles.index')->with('success', 'Deleted with success!');

@@ -22,7 +22,10 @@
                             <h5 class="card-header">{{ $role->name }}</h5>
                             <div class="card-body">
                                 <a href="{{ route('roles.edit-role', $role->id) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ route('roles.delete-role', $role->id) }}" class="btn btn-danger">Delete</a>
+
+                                @if($role->name !== 'user')
+                                    <a href="{{ route('roles.delete-role', $role->id) }}" class="btn btn-danger">Delete</a>
+                                @endif
                             </div>
                         </div>
                     @endforeach

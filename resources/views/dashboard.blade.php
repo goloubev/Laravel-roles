@@ -14,22 +14,32 @@
                     </div>
                 @endif
 
-                <p><a href="{{ route('posts.add-post') }}" class="btn btn-success mb-4">Add new post</a></p>
+                @can('add-posts')
+                    <p><a href="{{ route('posts.add-post') }}" class="btn btn-success mb-4">Add new post</a></p>
+                @endcan
 
-                @if(count($posts) > 0)
-                    @foreach($posts as $post)
-                        <div class="card mb-3">
-                            <h5 class="card-header">{{ $post->name }} ({{ $post->created_at->diffForHumans() }})</h5>
-                            <div class="card-body">
-                                <p class="mb-3">{{ $post->text }}</p>
-                                <a href="{{ route('posts.edit-post', $post->id) }}" class="btn btn-primary">Edit</a>
-                                <a href="{{ route('posts.delete-post', $post->id) }}" class="btn btn-danger">Delete</a>
+                @can('show-posts')
+                    @if(count($posts) > 0)
+                        @foreach($posts as $post)
+                            <div class="card mb-3">
+                                <h5 class="card-header">{{ $post->name }} <span style="font-size:12px;">- {{ $post->created_at->diffForHumans() }}</span></h5>
+                                <div class="card-body">
+                                    <p class="mb-3">{{ $post->text }}</p>
+
+                                    @can('edit-posts')
+                                        <a href="{{ route('posts.edit-post', $post->id) }}" class="btn btn-primary">Edit</a>
+                                    @endcan
+
+                                    @can('delete-posts')
+                                        <a href="{{ route('posts.delete-post', $post->id) }}" class="btn btn-danger">Delete</a>
+                                    @endcan
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                @else
-                    No posts
-                @endif
+                        @endforeach
+                    @else
+                        No posts
+                    @endif
+                @endcan
             </div>
         </div>
     </div>
