@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,6 +32,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/edit-role/{role}', [RoleController::class, 'edit'])->name('roles.edit-role');
         Route::post('/update-role/{role}', [RoleController::class, 'update'])->name('roles.update-role');
         Route::get('/delete-role/{role}', [RoleController::class, 'destroy'])->name('roles.delete-role');
+    });
+
+    Route::group(['middleware' => 'role:super-admin', 'prefix' => 'users'], function() {
+        Route::get('/index', [UserController::class, 'index'])->name('users.index');
+        Route::get('/add-user', [UserController::class, 'create'])->name('users.add-user');
+        Route::post('/store-user', [UserController::class, 'store'])->name('users.store-user');
+        Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('users.edit-user');
+        Route::post('/update-user/{user}', [UserController::class, 'update'])->name('users.update-user');
+        Route::get('/delete-user/{user}', [UserController::class, 'destroy'])->name('users.delete-user');
     });
 });
 

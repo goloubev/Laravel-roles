@@ -22,7 +22,10 @@
                     @if(count($posts) > 0)
                         @foreach($posts as $post)
                             <div class="card mb-3">
-                                <h5 class="card-header">{{ $post->name }} <span style="font-size:12px;">- {{ $post->created_at->diffForHumans() }}</span></h5>
+                                <h5 class="card-header">
+                                    {{ $post->name }}
+                                    <span style="font-size:12px; float:right;">{{ $post->created_at->diffForHumans() }}</span>
+                                </h5>
                                 <div class="card-body">
                                     <p class="mb-3">{{ $post->text }}</p>
 

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
+use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
