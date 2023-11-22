@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\PostFilter;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Models\Post;
@@ -10,18 +11,20 @@ use App\Models\Category;
 
 class PostController extends Controller
 {
-    public function index(): View
+    public function index(PostFilter $request): View
     {
-        $posts = Post::where('category_id', '!=', 'null')->orderBy('created_at', 'desc')->get();
+        $categories = Category::all()->sortBy('title');
+        $posts = Post::filter($request)->orderBy('created_at', 'desc')->paginate(4)->withQueryString();
 
         return view('dashboard', [
-            'posts' => $posts
+            'categories' => $categories,
+            'posts' => $posts,
         ]);
     }
 
     public function create(): View
     {
-        $categories = Category::all();
+        $categories = Category::all()->sortBy('title');
 
         return view('posts.add-post', [
             'categories' => $categories,
@@ -43,7 +46,7 @@ class PostController extends Controller
 
     public function edit(Post $post): View
     {
-        $categories = Category::all();
+        $categories = Category::all()->sortBy('title');
 
         return view('posts.edit-post', [
             'categories' => $categories,

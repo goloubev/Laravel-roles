@@ -1,0 +1,12 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: -15px; /* Adjust the negative margin to your liking for spacing */
+}
+
+.card {
+    flex: 0 0 47%; /* Adjust the width to leave some space between cards */
+    margin: 10px; /* Adjust the margin to create space between cards */
+    box-sizing: border-box; /* Include padding and border in the total width and height */
+}
