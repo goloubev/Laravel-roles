@@ -6,12 +6,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class PostController extends Controller
 {
     public function index(): View
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::where('category_id', '!=', 'null')->orderBy('created_at', 'desc')->get();
 
         return view('dashboard', [
             'posts' => $posts
@@ -20,14 +21,19 @@ class PostController extends Controller
 
     public function create(): View
     {
-        return view('posts.add-post');
+        $categories = Category::all();
+
+        return view('posts.add-post', [
+            'categories' => $categories,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name' => 'required|string|min:1|max:250',
+            'title' => 'required|string|min:1|max:250',
             'text' => 'required|string|min:1',
+            'category_id' => 'required|integer|exists:categories,id',
         ]);
 
         Post::create($data);
@@ -37,7 +43,10 @@ class PostController extends Controller
 
     public function edit(Post $post): View
     {
+        $categories = Category::all();
+
         return view('posts.edit-post', [
+            'categories' => $categories,
             'post' => $post,
         ]);
     }
@@ -45,8 +54,9 @@ class PostController extends Controller
     public function update(Post $post, Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name' => 'required|string|min:1|max:250',
+            'title' => 'required|string|min:1|max:250',
             'text' => 'required|string|min:1',
+            'category_id' => 'required|integer|exists:categories,id',
         ]);
 
         $post->update($data);

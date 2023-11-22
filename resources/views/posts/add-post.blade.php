@@ -22,9 +22,9 @@
                     @csrf
 
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" value="{{ old('name') }}" class="form-control" />
-                        @error('name')
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title" value="{{ old('title') }}" class="form-control" />
+                        @error('title')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -32,6 +32,22 @@
                         <label for="text">Text</label>
                         <textarea name="text" id="text" class="form-control" rows="3">{{ old('text') }}</textarea>
                         @error('text')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="category_id">Category</label>
+                        <select name="category_id" class="custom-select form-control" style="width:100%;">
+                            <option value="">Select...</option>
+
+                            @foreach($categories as $category)
+                                <option
+                                    value="{{ $category->id }}"
+                                    {{ $category->id == old('category_id') ? 'selected' : '' }}
+                                >{{ $category->title }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

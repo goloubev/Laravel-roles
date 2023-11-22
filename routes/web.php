@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -10,12 +11,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard');
 
     Route::group(['prefix' => 'posts'], function() {
         Route::get('/add-post', [PostController::class, 'create'])->name('posts.add-post')->middleware('can:add-posts');
@@ -32,6 +33,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/edit-role/{role}', [RoleController::class, 'edit'])->name('roles.edit-role');
         Route::post('/update-role/{role}', [RoleController::class, 'update'])->name('roles.update-role');
         Route::get('/delete-role/{role}', [RoleController::class, 'destroy'])->name('roles.delete-role');
+    });
+
+    Route::group(['middleware' => 'role:super-admin', 'prefix' => 'categories'], function() {
+        Route::get('/index', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/add-category', [CategoryController::class, 'create'])->name('categories.add-category');
+        Route::post('/store-category', [CategoryController::class, 'store'])->name('categories.store-category');
+        Route::get('/edit-category/{category}', [CategoryController::class, 'edit'])->name('categories.edit-category');
+        Route::post('/update-category/{category}', [CategoryController::class, 'update'])->name('categories.update-category');
+        Route::get('/delete-category/{category}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
     });
 
     Route::group(['middleware' => 'role:super-admin', 'prefix' => 'users'], function() {

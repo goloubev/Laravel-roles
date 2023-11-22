@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 
-class PostsSeeder extends Seeder
+class CategoriesSeeder extends Seeder
 {
     public function run(): void
     {
-        Post::factory(20)->create();
+        Category::factory(4)->create();
     }
 }

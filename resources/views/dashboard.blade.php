@@ -18,15 +18,16 @@
                     <p><a href="{{ route('posts.add-post') }}" class="btn btn-success mb-4">Add new post</a></p>
                 @endcan
 
-                @can('show-posts')
+                {{--@can('show-posts')--}}
                     @if(count($posts) > 0)
                         @foreach($posts as $post)
                             <div class="card mb-3">
                                 <h5 class="card-header">
-                                    {{ $post->name }}
+                                    {{ $post->title }}
                                     <span style="font-size:12px; float:right;">{{ $post->created_at->diffForHumans() }}</span>
                                 </h5>
                                 <div class="card-body">
+                                    <p class="mb-3"><strong>{{ $post->category->title }}</strong></p>
                                     <p class="mb-3">{{ $post->text }}</p>
 
                                     @can('edit-posts')
@@ -42,7 +43,7 @@
                     @else
                         No posts
                     @endif
-                @endcan
+                {{--@endcan--}}
             </div>
         </div>
     </div>
