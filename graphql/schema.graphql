@@ -1,0 +1,23 @@
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    posts: [Post!]! @paginate(defaultCount: 10)
+    post(id: ID @eq): Post @find
+
+    categories: [Category!]! @paginate(defaultCount: 10)
+    category(id: ID @eq): Category @find
+}
+
+type Post {
+    id: ID!
+    title: String!
+    category: Category!
+    updated_at: DateTime!
+}
+
+type Category {
+    id: ID!
+    title: String!
+    posts: [Post!]!
+    updated_at: DateTime!
+}
