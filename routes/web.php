@@ -35,14 +35,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/delete-role/{role}', [RoleController::class, 'destroy'])->name('roles.delete-role');
     });
 
-    Route::group(['middleware' => 'role:super-admin', 'prefix' => 'categories'], function() {
-        Route::get('/index', [CategoryController::class, 'index'])->name('categories.index');
-        Route::get('/add-category', [CategoryController::class, 'create'])->name('categories.add-category');
-        Route::post('/store-category', [CategoryController::class, 'store'])->name('categories.store-category');
-        Route::get('/edit-category/{category}', [CategoryController::class, 'edit'])->name('categories.edit-category');
-        Route::post('/update-category/{category}', [CategoryController::class, 'update'])->name('categories.update-category');
-        Route::get('/delete-category/{category}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
-    });
+    Route::prefix('categories')->middleware('role:super-admin')->controller(CategoryController::class)->group(
+        function() {
+            Route::get('index', 'index')->name('categories.index');
+            Route::get('add-category', 'create')->name('categories.add-category');
+            Route::post('store-category', 'store')->name('categories.store-category');
+            Route::get('edit-category/{category}', 'edit')->name('categories.edit-category');
+            Route::post('update-category/{category}', 'update')->name('categories.update-category');
+            Route::get('delete-category/{category}', 'destroy')->name('categories.delete-category');
+        }
+    );
 
     Route::group(['middleware' => 'role:super-admin', 'prefix' => 'users'], function() {
         Route::get('/index', [UserController::class, 'index'])->name('users.index');
